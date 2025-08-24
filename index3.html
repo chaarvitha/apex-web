@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Portfolio</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: "Segoe UI", sans-serif; line-height: 1.6; }
+
+    /* Navbar */
+    header {
+      background: #222;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    header h1 { font-size: 1.8rem; }
+    nav ul { list-style: none; display: flex; gap: 20px; }
+    nav ul li a { color: white; text-decoration: none; font-weight: bold; }
+    .menu-toggle { display: none; font-size: 26px; cursor: pointer; }
+
+    /* Hero */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 50px;
+      min-height: 80vh;
+    }
+    .hero img {
+      width: 100%;
+      border-radius: 10px;
+    }
+    .hero-text h2 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 15px; }
+    .hero-text p { margin-bottom: 20px; }
+    .hero-text button {
+      padding: 12px 20px;
+      background: #333;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .hero-text button:hover {
+      background: #555;
+      transform: scale(1.05);
+    }
+
+    /* Projects */
+    .projects {
+      padding: 50px 20px;
+      background: #f9f9f9;
+      text-align: center;
+    }
+    .projects h2 { margin-bottom: 20px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+      cursor: pointer;
+    }
+    .card:hover { transform: translateY(-5px); }
+    .card img {
+      width: 100%;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+    .card h3 { margin-bottom: 8px; }
+
+    /* Footer */
+    footer {
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .hero { grid-template-columns: 1fr; text-align: center; }
+      .hero img { order: -1; }
+      .grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      nav ul {
+        display: none;
+        flex-direction: column;
+        background: #333;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 200px;
+        padding: 15px;
+      }
+      nav ul.show { display: flex; }
+      .menu-toggle { display: block; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header>
+    <h1>My Portfolio</h1>
+    <span class="menu-toggle" onclick="toggleMenu()">☰</span>
+    <nav>
+      <ul id="nav-list">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="hero-text">
+      <h2>Hello, I'm chaarvitha👋</h2>
+      <p>A Frontend Developer passionate about building modern, responsive, and interactive websites.</p>
+      <button onclick="alert('Thanks for showing interest! I will get back to you soon.')">Hire Me</button>
+    </div>
+    <img src="https://picsum.photos/600/400" alt="Profile Image">
+  </section>
+
+  <!-- Projects -->
+  <section class="projects" id="projects">
+    <h2>My Projects</h2>
+    <div class="grid">
+      <div class="card" onclick="alert('Responsive Portfolio: A mobile-first portfolio site with interactive design.')">
+        <img src="https://picsum.photos/id/1015/400/250" alt="Portfolio Project">
+        <h3>Responsive Portfolio</h3>
+        <p>A fully responsive portfolio site with media queries & animations.</p>
+      </div>
+      <div class="card" onclick="alert('Quiz App: Built with JavaScript to test knowledge interactively.')">
+        <img src="https://picsum.photos/id/1025/400/250" alt="Quiz App">
+        <h3>Quiz Application</h3>
+        <p>An interactive multiple-choice quiz using JavaScript.</p>
+      </div>
+      <div class="card" onclick="alert('Weather App: Fetches real-time data from OpenWeather API.')">
+        <img src="https://picsum.photos/id/1035/400/250" alt="Weather App">
+        <h3>Weather App</h3>
+        <p>A weather application fetching real-time data from an API.</p>
+      </div>
+      <div class="card" onclick="alert('Image Carousel: Auto-sliding carousel with smooth transitions.')">
+        <img src="https://picsum.photos/id/1045/400/250" alt="Carousel">
+        <h3>Image Carousel</h3>
+        <p>An auto-sliding and manual navigation image carousel.</p>
+      </div>
+      <div class="card" onclick="alert('E-commerce UI: Mock product page with add-to-cart feature.')">
+        <img src="https://picsum.photos/id/1055/400/250" alt="E-commerce">
+        <h3>E-commerce UI</h3>
+        <p>A shopping UI with product cards and cart interaction.</p>
+      </div>
+      <div class="card" onclick="alert('Chat App UI: Real-time styled chat interface design.')">
+        <img src="https://picsum.photos/id/1065/400/250" alt="Chat App">
+        <h3>Chat App UI</h3>
+        <p>A simple chat interface design with responsive layout.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="contact">
+    <p>© 2025 My Portfolio | Built with ❤️</p>
+    <button onclick="alert('Contact Me at: alex@example.com')">Contact Me</button>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById("nav-list").classList.toggle("show");
+    }
+  </script>
+
+</body>
+</html>
+
