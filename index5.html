@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather App </title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #4facfe, #00f2fe);
+      text-align: center;
+      padding: 40px;
+      color: white;
+    }
+    .weather-box {
+      background: rgba(0,0,0,0.5);
+      padding: 20px;
+      border-radius: 12px;
+      display: inline-block;
+      min-width: 320px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    input {
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+    }
+    button {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 8px;
+      margin-left: 5px;
+      cursor: pointer;
+      background: #222;
+      color: white;
+    }
+    #weather {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+    #debug {
+      margin-top: 20px;
+      font-size: 14px;
+      background: rgba(0,0,0,0.7);
+      padding: 10px;
+      border-radius: 8px;
+      text-align: left;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      word-wrap: break-word;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌍 Weather App </h1>
+  <div class="weather-box">
+    <input type="text" id="city" placeholder="Enter city name">
+    <button onclick="getWeather()">Get Weather</button>
+    <div id="weather"></div>
+    <div id="debug"></div>
+  </div>
+
+  <script>
+    async function getWeather() {
+      const city = document.getElementById("city").value.trim();
+      const apiKey = "2d002b1aa4fd59e6107ce99e479409af"; // 🔑 Replace with your OpenWeatherMap API key
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+      document.getElementById("weather").innerHTML = "⏳ Fetching weather...";
+      document.getElementById("debug").innerHTML = `<b>Request URL:</b><br>${url}`;
+
+      try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+          throw new Error(`❌ HTTP Error: ${response.status} ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        console.log("API Response:", data); // 👀 Debug in browser console
+        document.getElementById("debug").innerHTML += `<br><br><b>Raw API Response:</b><br>${JSON.stringify(data, null, 2)}`;
+
+        if (data.cod && data.cod !== 200) {
+          throw new Error(data.message);
+        }
+
+        document.getElementById("weather").innerHTML = `
+          <h2>${data.name}, ${data.sys.country}</h2>
+          <p>🌡 Temperature: ${data.main.temp} °C</p>
+          <p>☁ Weather: ${data.weather[0].description}</p>
+          <p>💧 Humidity: ${data.main.humidity}%</p>
+          <p>🌬 Wind Speed: ${data.wind.speed} m/s</p>
+        `;
+      } catch (error) {
+        document.getElementById("weather").innerHTML = `<p style="color: red;">❌ Error: ${error.message}</p>`;
+        document.getElementById("debug").innerHTML += `<br><br><b>Error:</b><br>${error}`;
+      }
+    }
+  </script>
+</body>
+</html>
+
+
