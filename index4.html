@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #75d1f0; padding: 30px; }
+    .quiz-container {
+      background: #2a93c0;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    h2 { margin-bottom: 15px; }
+    .options { margin: 10px 0; }
+    .options button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      background: #eee8e8;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .options button:hover { background: #ddd; }
+    #result { font-weight: bold; margin-top: 15px; }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h2 id="question">Question goes here</h2>
+    <div class="options" id="options"></div>
+    <button onclick="nextQuestion()">Next</button>
+    <p id="result"></p>
+  </div>
+
+  <script>
+    const quizData = [
+      {
+        question: "What does HTML stand for?",
+        options: ["HyperText Markup Language", "HighText Machine Language", "Hyperlink Text Management Language"],
+        answer: "HyperText Markup Language"
+      },
+      {
+        question: "Which language is used for styling web pages?",
+        options: ["HTML", "JQuery", "CSS", "XML"],
+        answer: "CSS"
+      },
+      {
+        question: "Which is not a JavaScript Framework?",
+        options: ["Python Script", "React", "Vue", "Angular"],
+        answer: "Python Script"
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    function loadQuestion() {
+      const q = quizData[currentQuestion];
+      document.getElementById("question").innerText = q.question;
+      const optionsDiv = document.getElementById("options");
+      optionsDiv.innerHTML = "";
+      q.options.forEach(option => {
+        const button = document.createElement("button");
+        button.innerText = option;
+        button.onclick = () => checkAnswer(option);
+        optionsDiv.appendChild(button);
+      });
+    }
+
+    function checkAnswer(answer) {
+      if (answer === quizData[currentQuestion].answer) {
+        score++;
+        alert("✅ Correct!");
+      } else {
+        alert("❌ Wrong!");
+      }
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < quizData.length) {
+        loadQuestion();
+      } else {
+        document.getElementById("result").innerText = 
+          `Quiz Completed! 🎉 Your score: ${score} / ${quizData.length}`;
+        document.getElementById("options").innerHTML = "";
+        document.getElementById("question").innerText = "Well Done!";
+      }
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
+
