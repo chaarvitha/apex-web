@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Portfolio</title>
+<style>
+* {margin:0; padding:0; box-sizing:border-box;}
+body {font-family: Arial, sans-serif; line-height:1.6;}
+a {text-decoration:none; color:inherit;}
+
+nav {display:flex; justify-content:space-between; align-items:center; padding:1rem 2rem; background:#333; color:#fff; position:sticky; top:0; z-index:1000;}
+nav ul {display:flex; list-style:none;}
+nav ul li {margin:0 1rem;}
+nav ul li a {color:#131212; font-weight:bold; transition:0.3s;}
+nav ul li a:hover {color:#f39c12;}
+
+section {padding:4rem 2rem; min-height:100vh;}
+#home {display:flex; flex-direction:column; justify-content:center; align-items:center; background:#f4f4f4;}
+#home h1 {font-size:2.5rem; margin-bottom:1rem;}
+#home p {font-size:1.2rem; color:#555;}
+
+#about, #projects, #todo, #product, #contact {background:#ded8d8;}
+h2 {margin-bottom:1.5rem; color:#333; text-align:center;}
+
+.project-grid {display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:1rem;}
+.project-card {border:1px solid #ddd; padding:1rem; border-radius:10px; transition:0.3s;}
+.project-card:hover {box-shadow:0 4px 10px rgba(0,0,0,0.1);}
+
+form {max-width:500px; margin:auto; display:flex; flex-direction:column;}
+input, textarea, select {margin-bottom:1rem; padding:0.8rem; border:1px solid #ccc; border-radius:5px;}
+button {padding:0.8rem; background:#333; color:#fff; border:none; border-radius:5px; cursor:pointer; transition:0.3s;}
+button:hover {background:#f39c12;}
+
+.todo-container {max-width:500px; margin:auto; text-align:center;}
+.todo-container input {width:70%;}
+ul {list-style:none; padding:0;}
+ul li {background:#f4f4f4; padding:0.5rem; margin:0.3rem 0; border-radius:5px; display:flex; justify-content:space-between; align-items:center;}
+ul li button {background:red; padding:0.3rem 0.6rem; border:none; color:#fff; border-radius:5px; cursor:pointer;}
+
+.products {display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:1rem; max-width:900px; margin:auto;}
+.product-card {border:1px solid #ddd; border-radius:10px; padding:1rem; text-align:center; transition:0.3s;}
+.product-card img {max-width:100%; border-radius:8px;}
+.filter-sort {max-width:900px; margin:auto 0 2rem; display:flex; justify-content:center; gap:1rem;}
+
+body.dark {background:#222; color:#f4f4f4;}
+body.dark nav {background:#111;}
+body.dark #home {background:#333;}
+body.dark .project-card, body.dark .product-card {border-color:#555;}
+body.dark input, body.dark textarea, body.dark select {background:#333; color:#fff; border:1px solid #666;}
+body.dark ul li {background:#444; color:#fff;}
+</style>
+</head>
+<body>
+
+<nav>
+<h1>My Portfolio</h1>
+<ul>
+<li><a href="#home">Home</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="#projects">Projects</a></li>
+<li><a href="#todo">To-Do App</a></li>
+<li><a href="#product">Products</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+<button onclick="toggleDarkMode()">🌙</button>
+</nav>
+
+<section id="home">
+<h1>Hi, I'm chaarvitha</h1>
+<p>Frontend Developer | Web Enthusiast | Lifelong Learner</p>
+</section>
+
+<section id="about">
+<h2>About Me</h2>
+<p style="max-width:700px; margin:auto; text-align:center;">Passionate about building interactive and responsive web applications. Skilled in HTML, CSS, JavaScript, and constantly exploring new technologies.</p>
+</section>
+
+<section id="projects">
+<h2>My Projects</h2>
+<div class="project-grid">
+<div class="project-card">
+<h3>Interactive Quiz + Carousel</h3>
+<p>A fun quiz app with integrated image carousel built using JavaScript.</p>
+</div>
+<div class="project-card">
+<h3>Weather App</h3>
+<p>Fetches real-time weather data using API and displays dynamically.</p>
+</div>
+<div class="project-card">
+<h3>To-Do List with Local Storage</h3>
+<p>A productivity app that saves tasks persistently using localStorage.</p>
+</div>
+</div>
+</section>
+
+<section id="todo">
+<h2>To-Do List App</h2>
+<div class="todo-container">
+<input type="text" id="taskInput" placeholder="Enter a task..." />
+<button onclick="addTask()">Add Task</button>
+<ul id="taskList"></ul>
+</div>
+</section>
+
+<section id="product">
+<h2>Product Listing</h2>
+<div class="filter-sort">
+<select id="categoryFilter" onchange="updateProducts()">
+<option value="all">All Categories</option>
+<option value="Electronics">Electronics</option>
+<option value="Accessories">Accessories</option>
+</select>
+<select id="sortPrice" onchange="updateProducts()">
+<option value="none">Sort by Price</option>
+<option value="low">Low to High</option>
+<option value="high">High to Low</option>
+</select>
+</div>
+<div class="products" id="productList"></div>
+</section>
+
+<section id="contact">
+<h2>Contact Me</h2>
+<form onsubmit="return sendMessage(event)">
+<input type="text" id="name" placeholder="Your Name" required />
+<input type="email" id="email" placeholder="Your Email" required />
+<textarea id="message" placeholder="Your Message" rows="5" required></textarea>
+<button type="submit">Send Message</button>
+</form>
+</section>
+
+<script>
+// Dark mode toggle
+function toggleDarkMode() {
+  document.body.classList.toggle('dark');
+  alert("Theme toggled!");
+}
+
+// Contact form
+function sendMessage(e) {
+  e.preventDefault();
+  let name = document.getElementById('name').value;
+  let email = document.getElementById('email').value;
+  let message = document.getElementById('message').value;
+  if (name && email && message) {
+    alert("Thank you, " + name + "! Your message has been sent successfully.");
+    e.target.reset();
+  } else {
+    alert("Please fill out all fields.");
+  }
+  return false;
+}
+
+// -------------------- TO-DO LIST --------------------
+const taskInput = document.getElementById('taskInput');
+const taskList = document.getElementById('taskList');
+
+function loadTasks() {
+  let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+  tasks.forEach(task => createTaskElement(task));
+}
+
+function createTaskElement(task) {
+  const li = document.createElement('li');
+  li.textContent = task;
+
+  const btn = document.createElement('button');
+  btn.textContent = 'X';
+  btn.onclick = () => removeTask(task, li);
+
+  li.appendChild(btn);
+  taskList.appendChild(li);
+}
+
+function addTask() {
+  let task = taskInput.value.trim();
+  if (task) {
+    createTaskElement(task);
+    saveTask(task);
+    taskInput.value = '';
+  } else {
+    alert("Please enter a task.");
+  }
+}
+
+function saveTask(task) {
+  let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+  tasks.push(task);
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+function removeTask(task, element) {
+  element.remove();
+  let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+  tasks = tasks.filter(t => t !== task);
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+loadTasks();
+
+// -------------------- PRODUCT LISTING --------------------
+let products = [
+  { name: "Laptop", price: 999, category: "Electronics", image: "https://g2u-wp-prod.s3-ap-southeast-2.amazonaws.com/wp-content/uploads/2025/01/shutterstock_2328203513.jpg"},
+  { name: "Smartphone", price: 699, category: "Electronics", image:"https://cdn.thewirecutter.com/wp-content/media/2024/09/iphone-2048px-6979.jpg?auto=webp&quality=75&width=1024" },
+  { name: "Headphones", price: 199, category: "Accessories", image: "https://m.media-amazon.com/images/I/61v6atS3dRL.jpg" },
+  { name: "Smartwatch", price: 299, category: "Accessories", image: "https://m.media-amazon.com/images/I/618qhNo1BOL._UF1000,1000_QL80_.jpg" }
+];
+
+const productList = document.getElementById('productList');
+const categoryFilter = document.getElementById('categoryFilter');
+const sortPrice = document.getElementById('sortPrice');
+
+function displayProducts(list) {
+  productList.innerHTML = '';
+  list.forEach(p => {
+    const div = document.createElement('div');
+    div.className = 'product-card';
+    div.innerHTML = `
+      <img src="${p.image}" alt="${p.name}" />
+      <h4>${p.name}</h4>
+      <p>Category: ${p.category}</p>
+      <p>Price: $${p.price}</p>
+      <button onclick="alert('Added ${p.name} to cart!')">Add to Cart</button>
+    `;
+    productList.appendChild(div);
+  });
+}
+
+// Filter + Sort
+function updateProducts() {
+  let filtered = products;
+
+  // Filter by category
+  const category = categoryFilter.value;
+  if (category !== 'all') {
+    filtered = filtered.filter(p => p.category === category);
+  }
+
+  // Sort by price
+  const sort = sortPrice.value;
+  if (sort === 'low') filtered.sort((a, b) => a.price - b.price);
+  else if (sort === 'high') filtered.sort((a, b) => b.price - a.price);
+
+  displayProducts(filtered);
+}
+
+// Initial display
+updateProducts();
+</script>
+</body>
+</html>
+
